@@ -3,8 +3,8 @@ public class University {
     private Student[] students;
     private int noStudents;
 
-    public University() {
-        name = "University of Computing";
+    public University(String name) {
+        this.name = name;
         students = new Student[100];
         noStudents = 0;
     }
@@ -44,7 +44,7 @@ public class University {
         return s;
     }
     public static void main(String[] args) {
-        University u = new University();
+        University u = new University("University of Computing");
         System.out.println(u.getName());
         u.addStudent("Joe", "Stewart", "650-417-5232");
         System.out.println(u.getNoStudents() + " students enrolled");
