@@ -66,7 +66,7 @@ public class StudentApplication {
     public static void main(String[] args) {
         int choice;
 
-        university = new University();
+        university = new University("University of Computing");
         scanner = new Scanner(System.in);
 
         choice = menu();
