@@ -2,11 +2,15 @@ public class University {
     private String name;
     private Student[] students;
     private int noStudents;
+    private Course[] courses;
+    private int noCourses;
 
     public University(String name) {
         this.name = name;
         students = new Student[100];
         noStudents = 0;
+        courses = new Course[100];
+        noCourses = 0;
     }
     public String getName() {
         return name;
@@ -42,6 +46,37 @@ public class University {
         for(int i = 0; i < noStudents; i++)
             s = s + students[i].toString() + "\n";
         return s;
+    }
+    public void addCourse(String code, String title, int noCredits) {
+        courses[noCourses] = new Course(code, title, noCredits);
+        noCourses++;
+    }
+    public Course getCourse(String courseCode) {
+        for(int i = 0; i < noCourses; i++)
+            if(courses[i].getCode().equals(courseCode))
+                return courses[i];
+        return null;
+    }
+    public String getCourses() {
+        String s = "Course List:\n";
+        for(int i = 0; i < noCourses; i++)
+            s = s + courses[i].toString() + "\n";
+        return s;
+    }
+    public boolean registerStudent(int studentID, String courseCode) {
+        Student student = getStudent(studentID);
+        Course course = getCourse(courseCode);
+        if(student == null || course == null)
+            return false;
+        boolean success = student.register(course);
+        return success;
+    }
+    public String getCourses(int studentID) {
+        Student student = getStudent(studentID);
+        if(student == null)
+            return null;
+        else
+            return student.getCourses();
     }
     public static void main(String[] args) {
         University u = new University("University of Computing");
