@@ -5,8 +5,10 @@ public class Student {
     private String phone;
     private static int IDGenerator = 10;
     private static int MAX_COURSES = 30;
+/*
     private Course[] courses;
     private int noCourses;
+*/
 
     public Student(String firstName, String lastName, String phone) {
         ID = IDGenerator;
@@ -14,8 +16,10 @@ public class Student {
         this.lastName = lastName;
         this.phone = phone;
         IDGenerator += 10;
+/*
         courses = new Course[MAX_COURSES];
         noCourses = 0;
+*/
     }
     public int getID() {
         return ID;
@@ -29,14 +33,15 @@ public class Student {
     public String getPhone() {
         return phone;
     }
+    public void setPhone(String newPhone) {
+        phone = newPhone;
+    }
     public String toString() {
         String s;
         s = "ID: " + ID + " Name: " + firstName + " " + lastName + " Telephone: " + phone;
         return s;
     }
-    public void setPhone(String newPhone) {
-        phone = newPhone;
-    }
+/*
     public boolean register(Course course) {
         if(noCourses == MAX_COURSES)
             return false;
@@ -54,6 +59,7 @@ public class Student {
             s = s + courses[i].toString() + "\n";
         return s;
     }
+*/
     public static void main(String[] args) {
         Student s = new Student("Joe", "Stewart", "650-938-6396");
         System.out.println(s);

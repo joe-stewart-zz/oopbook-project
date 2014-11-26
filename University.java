@@ -4,13 +4,16 @@ public class University {
     private int noStudents;
     private Course[] courses;
     private int noCourses;
+    private Registration[] registrations;
+    private int noRegistrations;
 
     public University(String name) {
         this.name = name;
-        students = new Student[100];
+        students = new Student[1000];
         noStudents = 0;
         courses = new Course[100];
         noCourses = 0;
+        registrations = new Registration[10000];
     }
     public String getName() {
         return name;
@@ -63,21 +66,34 @@ public class University {
             s = s + courses[i].toString() + "\n";
         return s;
     }
-    public boolean registerStudent(int studentID, String courseCode) {
+
+    public boolean registerStudent(int studentID, String courseCode, int academicYear, int semester) {
         Student student = getStudent(studentID);
         Course course = getCourse(courseCode);
         if(student == null || course == null)
             return false;
-        boolean success = student.register(course);
-        return success;
+        Registration registration = new Registration(student, course, academicYear, semester);
+        registrations[noRegistrations] = registration;
+        noRegistrations++;
+        return true;
     }
+
     public String getCourses(int studentID) {
         Student student = getStudent(studentID);
         if(student == null)
             return null;
-        else
-            return student.getCourses();
+        else {
+            String s = "Courses registered for:\n";
+            for(int i = 0; i < noRegistrations; i++) {
+                if(registrations[i].getStudent() == student) {
+                    Course course = registrations[i].getCourse();
+                    s = s + course.toString() + "\n";
+                }
+            }
+            return s;
+        }
     }
+
     public static void main(String[] args) {
         University u = new University("University of Computing");
         System.out.println(u.getName());

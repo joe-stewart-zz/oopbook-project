@@ -67,12 +67,18 @@ public class StudentApplication {
     public static void choice5() {
         int studentID;
         String courseCode;
+        int academicYear, semester;
         boolean result;
+
         System.out.println("Enter a student ID:");
         studentID = scanner.nextInt();
         System.out.println("Enter a course code:");
         courseCode = scanner.next();
-        result = university.registerStudent(studentID, courseCode);
+        System.out.println("Enter the academic year and semester:");
+        academicYear = scanner.nextInt();
+        semester = scanner.nextInt();
+
+        result = university.registerStudent(studentID, courseCode, academicYear, semester);
         if(result == true)
             System.out.println("Registration successful.");
         else
