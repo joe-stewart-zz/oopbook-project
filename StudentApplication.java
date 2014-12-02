@@ -1,130 +1,159 @@
-import java.util.*;
+import java.awt.*;
+import java.awt.event.*;
+import javax.swing.*;
+import javax.swing.border.*;
+import javax.swing.event.*;
 
-public class StudentApplication {
-    private static University university;
-    private static Scanner scanner;
+/**
+ * StudentApplication
+ *
+ */
 
-    public static int menu() {
-        int choice;
+public class StudentApplication extends JFrame implements ActionListener, ChangeListener, Runnable {
+    private static StudentApplication instance;
+    private University university;
+    private JTabbedPane tabbedPane;
+    private JLabel statusBar;
 
-        System.out.println("\n\n");
-        System.out.println("1. Add new course");
-        System.out.println("2. Add new student");
-        System.out.println("3. Display course info");
-        System.out.println("4. Display student info");
-        System.out.println("5. Register student");
-        System.out.println("6. List all courses");
-        System.out.println("7. List all students");
-        System.out.println("8. List all courses for student");
-        System.out.println("9. Exit");
-        System.out.print("\n\nPlease make a selection: ");
+    /**
+     * Method StudentApplication
+     *
+     */
 
-        choice = scanner.nextInt();
-        return choice;
+    public StudentApplication() {
+        JMenuBar menuBar = new JMenuBar();
+
+        JMenu menu = new JMenu("File");
+        menu.add(createJMenuItem("Reset"));
+        menu.add(createJMenuItem("Exit"));
+        menuBar.add(menu);
+
+        menu = new JMenu("Help");
+        menu.add(createJMenuItem("Usage"));
+        menu.add(createJMenuItem("About"));
+        menuBar.add(menu);
+
+        menuBar.setBorder(new BevelBorder(BevelBorder.RAISED));
+        setJMenuBar(menuBar);
+
+        statusBar = new JLabel("Ready");
+        statusBar.setBorder(new BevelBorder(BevelBorder.LOWERED));
+        getContentPane().add(statusBar, BorderLayout.SOUTH);
+        tabbedPane = new JTabbedPane();
+        tabbedPane.addChangeListener(this);
+        getContentPane().add(tabbedPane, BorderLayout.CENTER);
+        setTitle("Student Management System");
+        pack();
+        setSize(490, 460);
+        setResizable(false);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setVisible(true);
+
+        try {
+            university = new University("The University of Computing");
+        }
+        catch(NoClassDefFoundError error){
+            setStatus("University.class not found.");
+        }
+        new Thread(this).start();
     }
 
-    public static void choice1() {
-        String courseCode, title;
-        int noCredits;
-        System.out.println("Enter the course code, title and credits:");
-        courseCode = scanner.next();
-        title = scanner.next();
-        noCredits = scanner.nextInt();
-        university.addCourse(courseCode, title, noCredits);
+    /**
+     * Method actionPerformed
+     *
+     *
+     * @param event
+     *
+     */
+
+    public void actionPerformed(ActionEvent event) {
+        String command = event.getActionCommand();
+        setStatus(command + " menu selected.");
+        if (command.equals("Exit"))
+            System.exit(0);
+        else if (command.equals("Reset"))
+            reset();
+        else if(command.equals("Usage"))
+            popup("Student Management System", "Manage information on students and courses.\nEnter data in relevant fields to perform functions.\nData in irrelevant fields will be ignored.\nSee User's Guide for more details.");
+        else if(command.equals("About")) popup("About Student Management System", "Object-Oriented Programming in Java\nAuthor: Permanand Mohan (c) 2013");
     }
 
-    public static void choice2() {
-        String firstName, lastName, phone;
-        System.out.println("Enter the student's first name, last name, and telephone number:");
-        firstName = scanner.next();
-        lastName = scanner.next();
-        phone = scanner.next();
-        university.addStudent(firstName, lastName, phone);
+    /**
+     * Method createJMenuItem
+     *
+     *
+     * @param name
+     *
+     */
+
+    private JMenuItem createJMenuItem(String name) {
+        JMenuItem item = new JMenuItem(name);
+        item.addActionListener(this);
+        return item;
     }
 
-    public static void choice3() {
-        String courseCode;
-        System.out.println("Enter the course code:");
-        courseCode = scanner.next();
-        Course course = university.getCourse(courseCode);
-        if(course == null)
-            System.out.println("No course with that code.");
-        else
-            System.out.println(course.toString());
+    /**
+     * Method popup
+     *
+     *
+     * @param title
+     * @param message
+     *
+     */
+
+    private void popup (String title, String message) {
+        JOptionPane.showMessageDialog(null, message, title, JOptionPane.INFORMATION_MESSAGE);
     }
 
-    public static void choice4() {
-        int studentID;
-        System.out.println("Enter a student ID:");
-        studentID = scanner.nextInt();
-        Student student = university.getStudent(studentID);
-        if(student == null)
-            System.out.println("No student with that ID.");
-        else
-            System.out.println(student.toString());
+    /**
+     * Method reset
+     *
+     */
+
+    public void reset() {
+        university = new University("The University of Computing");
+        tabbedPane.removeAll();
+        tabbedPane.addTab("Students", new StudentPanel(this, university));
+        tabbedPane.addTab("Courses", new CoursePanel(this, university));
+        tabbedPane.addTab("View All", new ViewAllPanel(this, university));
     }
 
-    public static void choice5() {
-        int studentID;
-        String courseCode;
-        int academicYear, semester;
-        boolean result;
+    /**
+     * Method run
+     *
+     */
 
-        System.out.println("Enter a student ID:");
-        studentID = scanner.nextInt();
-        System.out.println("Enter a course code:");
-        courseCode = scanner.next();
-        System.out.println("Enter the academic year and semester:");
-        academicYear = scanner.nextInt();
-        semester = scanner.nextInt();
-
-        result = university.registerStudent(studentID, courseCode, academicYear, semester);
-        if(result == true)
-            System.out.println("Registration successful.");
-        else
-            System.out.println("Error registering student.");
+    public void run() {
+        tabbedPane.addTab("Students", new StudentPanel(this, university));
+        tabbedPane.addTab("Courses", new CoursePanel(this, university));
+        tabbedPane.addTab("View All", new ViewAllPanel(this, university));
     }
 
-    public static void choice6() {
-        System.out.println(university.getCourses());
+    /**
+     * Method setStatus
+     *
+     *
+     * @param message
+     *
+     */
+
+    protected void setStatus(String message) {
+        statusBar.setText(message);
     }
 
-    public static void choice7() {
-        System.out.println(university.getStudents());
-    }
+    /**
+     * Method stateChanged
+     *
+     *
+     * @param event
+     *
+     */
 
-    public static void choice8() {
-        int studentID;
-        String result;
-        System.out.println("Enter a student ID: ");
-        studentID = scanner.nextInt();
-        result = university.getCourses(studentID);
-        if(result == null)
-            System.out.println("No student with that ID.");
-        else
-            System.out.println(result);
+    public void stateChanged(ChangeEvent event) {
+        setStatus("Ready.");
     }
 
     public static void main(String[] args) {
-        int choice;
-
-        university = new University("University of Computing");
-        scanner = new Scanner(System.in);
-
-        choice = menu();
-        while(choice != 9) {
-            switch(choice) {
-                case 1: choice1(); break;
-                case 2: choice2(); break;
-                case 3: choice3(); break;
-                case 4: choice4(); break;
-                case 5: choice5(); break;
-                case 6: choice6(); break;
-                case 7: choice7(); break;
-                case 8: choice8(); break;
-                default: break;
-            }
-            choice = menu();
-        };
+        StudentApplication sa = new StudentApplication();
     }
 }
