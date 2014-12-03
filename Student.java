@@ -1,69 +1,72 @@
-public class Student {
-    private int ID;
-    private String firstName;
-    private String lastName;
+public abstract class Student {
+    private long ID;
+    private String name;
+    private String address;
     private String phone;
-    private static int IDGenerator = 10;
-    private static int MAX_COURSES = 30;
-/*
-    private Course[] courses;
-    private int noCourses;
-*/
+    private String email;
 
-    public Student(String firstName, String lastName, String phone) {
-        ID = IDGenerator;
-        this.firstName = firstName;
-        this.lastName = lastName;
+    public Student(long ID, String name, String address, String phone, String email) {
+        this.ID = ID;
+        this.name = name;
+        this.address = address;
         this.phone = phone;
-        IDGenerator += 10;
-/*
-        courses = new Course[MAX_COURSES];
-        noCourses = 0;
-*/
+        this.email = email;
     }
-    public int getID() {
+
+    public boolean equals(Object o) {
+        if(o instanceof Student) {
+            Student s = (Student) o;
+            if(this.ID == s.getID())
+                return true;
+            else
+                return false;
+        }
+        else
+            throw new IllegalArgumentException("Argument is not of type Student.");
+    }
+
+    public long getID() {
         return ID;
     }
-    public String getFirstName() {
-        return firstName;
+
+    public String getName() {
+        return name;
     }
-    public String getLastName() {
-        return lastName;
+
+    public String getAddress() {
+        return address;
     }
+
     public String getPhone() {
         return phone;
     }
-    public void setPhone(String newPhone) {
-        phone = newPhone;
+
+    public String getEmail() {
+        return email;
     }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    } 
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
     public String toString() {
         String s;
-        s = "ID: " + ID + " Name: " + firstName + " " + lastName + " Telephone: " + phone;
+        s = "ID: " + ID + " Name: " + name + " Address: " + address + " Phone: " + phone + " Email: " + email;
         return s;
     }
-/*
-    public boolean register(Course course) {
-        if(noCourses == MAX_COURSES)
-            return false;
-        for(int i = 0; i < noCourses; i++)
-            if(courses[i] == course)
-                return false;
-        courses[noCourses] = course;
-        noCourses++;
-        return true;
-    }
-    public String getCourses() {
-        String s;
-        s = "Courses registered for:\n";
-        for(int i = 0; i < noCourses; i++)
-            s = s + courses[i].toString() + "\n";
-        return s;
-    }
-*/
+
     public static void main(String[] args) {
-        Student s = new Student("Joe", "Stewart", "650-938-6396");
-        System.out.println(s);
-        s.setPhone("650-417-5232");
-        System.out.println(s);
     }
 }
