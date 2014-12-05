@@ -50,7 +50,8 @@ public class StudentApplication extends JFrame implements ActionListener, Change
         setVisible(true);
 
         try {
-            university = new University("The University of Computing");
+            //university = new University("The University of Computing");
+            university = University.getInstance();
         }
         catch(NoClassDefFoundError error){
             setStatus("University.class not found.");
@@ -111,7 +112,8 @@ public class StudentApplication extends JFrame implements ActionListener, Change
      */
 
     public void reset() {
-        university = new University("The University of Computing");
+        //university = new University("The University of Computing");
+        university = University.getInstance();
         tabbedPane.removeAll();
         tabbedPane.addTab("Students", new StudentPanel(this, university));
         tabbedPane.addTab("Courses", new CoursePanel(this, university));

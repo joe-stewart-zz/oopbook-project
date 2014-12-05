@@ -3,16 +3,24 @@ import java.util.*;
 public class University {
     private static final int MAX_CREDITS = 20;
 
+    private static University university = null;
+
     private String name;
     private ArrayList students;
     private ArrayList courses;
     private ArrayList registrations;
 
-    public University(String name) {
+    private University(String name) {
         this.name = name;
         students = new ArrayList();
         courses = new ArrayList();
         registrations = new ArrayList();
+    }
+
+    public static University getInstance() {
+        if(university == null)
+            university = new University("The University of Computing");
+        return university;
     }
 
     public String getName() {
