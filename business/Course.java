@@ -1,3 +1,5 @@
+package business;
+
 public class Course implements Comparable<Course> {
     private String code;
     private String title;

@@ -1,5 +1,11 @@
 #OOPBOOK-PROJECT
 
+Version 1.1
+
+    Placed classes into packages to match fourth programming project, final
+    version. GUI code is updated from the booksite to support Student roles, and
+    has been cleaned up for legibility.
+
 Version 1.0
 
     Corresponds to the third programming project, but with a singleton University

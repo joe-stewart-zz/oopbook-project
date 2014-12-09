@@ -1,3 +1,5 @@
+package business;
+
 public class TooManyCreditsException extends Exception {
     public TooManyCreditsException() {
         super("Student course limit has been exceeded.");

@@ -1,3 +1,5 @@
+package business;
+
 public class Registration {
     private Student student;
     private Course course;

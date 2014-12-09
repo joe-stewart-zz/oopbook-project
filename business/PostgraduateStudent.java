@@ -1,3 +1,5 @@
+package business;
+
 public class PostgraduateStudent extends StudentRole {
     private String thesisTitle;
     private String supervisor;

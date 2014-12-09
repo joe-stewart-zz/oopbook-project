@@ -1,3 +1,5 @@
+package business;
+
 public class UndergraduateStudent extends StudentRole {
     private String major;
     private String minor;

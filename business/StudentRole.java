@@ -1,3 +1,5 @@
+package business;
+
 public abstract class StudentRole {
     private String name;
     private Student student;
