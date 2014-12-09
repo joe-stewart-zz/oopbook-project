@@ -1,9 +1,9 @@
-public class UndergraduateStudent extends Student {
+public class UndergraduateStudent extends StudentRole {
     private String major;
     private String minor;
 
-    public UndergraduateStudent(long ID, String name, String address, String phone, String email, String major, String minor) {
-        super(ID, name, address, phone, email);
+    public UndergraduateStudent(Student student, String roleName, String major, String minor) {
+        super(roleName, student);
         this.major = major;
         this.minor = minor;
     }
@@ -27,7 +27,7 @@ public class UndergraduateStudent extends Student {
     public String toString() {
         String s;
 
-        s = super.toString() + " Major: " + major + " Minor: " + minor;
+        s = this.getStudent().toString() + " Major: " + major + " Minor: " + minor;
 
         return s;
     }

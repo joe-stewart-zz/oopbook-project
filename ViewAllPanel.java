@@ -1,6 +1,7 @@
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
+
 import java.util.*;
 
 /**
@@ -8,11 +9,18 @@ import java.util.*;
  *
  */
 
-public class ViewAllPanel extends JPanel implements ActionListener {
+
+
+public class ViewAllPanel 
+        extends JPanel 
+        implements ActionListener {
+    
     private StudentApplication studentApplication;
     private University university;
     private JLabel viewLabel;
     private JTextArea viewField;
+    
+
 
     /**
      * Method ViewPanel
@@ -33,7 +41,7 @@ public class ViewAllPanel extends JPanel implements ActionListener {
         viewLabel = new JLabel("List Information on Students and Courses");
         viewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 
-        viewField = new JTextArea(15, 32);
+        viewField = new JTextArea(15, 34);
         viewField.setEditable(false);
         JScrollPane scroller = new JScrollPane();
         scroller.getViewport().add(viewField);
@@ -45,8 +53,9 @@ public class ViewAllPanel extends JPanel implements ActionListener {
         constrain(createJButton("Courses"), 2, 13, 2, GridBagConstraints.BOTH);
         constrain(createJButton("Undergraduate Students"), 0, 14, 2, GridBagConstraints.BOTH);
         constrain(createJButton("Postgraduate Students"), 2, 14, 2, GridBagConstraints.BOTH);
-
     }
+
+
 
     /**
      * Method constrain
@@ -72,6 +81,8 @@ public class ViewAllPanel extends JPanel implements ActionListener {
         add(component, gbConstraints);
     }
 
+
+
     /**
      * Method createJButton
      *
@@ -86,6 +97,8 @@ public class ViewAllPanel extends JPanel implements ActionListener {
         return button;
     }
 
+
+
     /**
      * Method actionPerformed
      *
@@ -94,17 +107,22 @@ public class ViewAllPanel extends JPanel implements ActionListener {
      *
      */
 
+
+
     public void actionPerformed(ActionEvent event) {
         try {
             String command = event.getActionCommand();
             studentApplication.setStatus(command + " operation selected.");
-            if (command.equals("Students"))
+            if (command.equals("Students")) 
                 students();
-            else if (command.equals("Undergraduate Students"))
+            else 
+            if (command.equals("Undergraduate Students")) 
                 undergraduateStudents();
-            else if(command.equals("Postgraduate Students"))
+            else 
+            if(command.equals("Postgraduate Students")) 
                 postgraduateStudents();
-            else if (command.equals("Courses"))
+            else 
+            if (command.equals("Courses")) 
                 courses();
         }
         catch (Error error) {
@@ -115,15 +133,18 @@ public class ViewAllPanel extends JPanel implements ActionListener {
         }
     }
 
+
+
     /**
      * Method students
      *
      */
 
-    private void students() {
+        private void students() {
         try {
             viewLabel.setText("List of All Students");
-            viewField.setText(university.getStudents());
+            viewField.setText(university.getStudents(new StudentIDComparator()));
+
         }
         catch (NoSuchMethodError error) {
             studentApplication.setStatus("getStudents() not implemented.");
@@ -131,17 +152,20 @@ public class ViewAllPanel extends JPanel implements ActionListener {
         catch (NoClassDefFoundError error) {
             studentApplication.setStatus("University.class not found.");
         }
-    }
+        }
+
+
 
     /**
      * Method undergraduateStudents
      *
      */
 
-    private void undergraduateStudents() {
+        private void undergraduateStudents() {
         try {
+
             viewLabel.setText("List of All Undergraduate Students");
-            viewField.setText(university.getUndergraduateStudents());
+            viewField.setText(university.getUndergraduateStudents(new StudentNameComparator()));
 
         }
         catch (NoSuchMethodError error) {
@@ -150,17 +174,21 @@ public class ViewAllPanel extends JPanel implements ActionListener {
         catch (NoClassDefFoundError error) {
             studentApplication.setStatus("University.class not found.");
         }
-    }
+        }
+
+
 
     /**
      * Method postgraduateStudents
      *
      */
 
-    private void postgraduateStudents() {
+        private void postgraduateStudents() {
         try {
+
             viewLabel.setText("List of All Postgraduate Students");
-            viewField.setText(university.getPostgraduateStudents());
+            viewField.setText(university.getPostgraduateStudents(new StudentIDComparator()));
+
         }
         catch (NoSuchMethodError error) {
             studentApplication.setStatus("getPostgraduateStudents() not implemented.");
@@ -168,17 +196,21 @@ public class ViewAllPanel extends JPanel implements ActionListener {
         catch (NoClassDefFoundError error) {
             studentApplication.setStatus("University.class not found.");
         }
-    }
+        }
+
+
 
     /**
      * Method courses
      *
      */
 
-    private void courses() {
+        private void courses() {
         try {
+
             viewField.setText(university.getCourses());
             viewLabel.setText("List of All Courses");
+
         }
         catch (NoSuchMethodError error) {
             studentApplication.setStatus("getCourses() not implemented.");
@@ -186,5 +218,6 @@ public class ViewAllPanel extends JPanel implements ActionListener {
         catch (NoClassDefFoundError error) {
             studentApplication.setStatus("University.class not found.");
         }
-    }
+        }
+
 }

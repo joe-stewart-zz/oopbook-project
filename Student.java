@@ -1,9 +1,12 @@
-public abstract class Student {
+import java.util.*;
+
+public class Student {
     private long ID;
     private String name;
     private String address;
     private String phone;
     private String email;
+    private ArrayList<StudentRole> roles;
 
     public Student(long ID, String name, String address, String phone, String email) {
         this.ID = ID;
@@ -11,6 +14,7 @@ public abstract class Student {
         this.address = address;
         this.phone = phone;
         this.email = email;
+        roles = new ArrayList<StudentRole>();
     }
 
     public boolean equals(Object o) {
@@ -23,6 +27,11 @@ public abstract class Student {
         }
         else
             throw new IllegalArgumentException("Argument is not of type Student.");
+    }
+
+    public int hashCode() {
+        String studentID = ID + "";
+        return studentID.hashCode();
     }
 
     public long getID() {
@@ -64,6 +73,35 @@ public abstract class Student {
     public String toString() {
         String s;
         s = "ID: " + ID + " Name: " + name + " Address: " + address + " Phone: " + phone + " Email: " + email;
+        return s;
+    }
+
+    public void addRole(StudentRole newRole) {
+        roles.add(newRole);
+    }
+
+    public StudentRole getRole(String roleName) {
+        Iterator<StudentRole> i = roles.iterator();
+        while(i.hasNext()) {
+            StudentRole sr = i.next();
+            if(sr.getName().equals(roleName))
+                return sr;
+        }
+        return null;
+    }
+
+    public Iterator<StudentRole> getRoles() {
+        Iterator<StudentRole> i = roles.iterator();
+        return i;
+    }
+
+    public String getRoleNames() {
+        String s = "";
+        Iterator<StudentRole> i = roles.iterator();
+        while(i.hasNext()) {
+            StudentRole sr = i.next();
+            s = s + sr.getName() + " ";
+        }
         return s;
     }
 

@@ -4,16 +4,23 @@ import javax.swing.*;
 import javax.swing.border.*;
 import javax.swing.event.*;
 
+
+
 /**
  * StudentApplication
  *
  */
 
-public class StudentApplication extends JFrame implements ActionListener, ChangeListener, Runnable {
+public class StudentApplication 
+            extends JFrame 
+            implements ActionListener, ChangeListener, Runnable {
+    
     private static StudentApplication instance;
     private University university;
     private JTabbedPane tabbedPane;
     private JLabel statusBar;
+
+
 
     /**
      * Method StudentApplication
@@ -21,6 +28,7 @@ public class StudentApplication extends JFrame implements ActionListener, Change
      */
 
     public StudentApplication() {
+
         JMenuBar menuBar = new JMenuBar();
 
         JMenu menu = new JMenu("File");
@@ -36,12 +44,13 @@ public class StudentApplication extends JFrame implements ActionListener, Change
         menuBar.setBorder(new BevelBorder(BevelBorder.RAISED));
         setJMenuBar(menuBar);
 
-        statusBar = new JLabel("Ready");
+            statusBar = new JLabel("Ready");
         statusBar.setBorder(new BevelBorder(BevelBorder.LOWERED));
         getContentPane().add(statusBar, BorderLayout.SOUTH);
         tabbedPane = new JTabbedPane();
         tabbedPane.addChangeListener(this);
         getContentPane().add(tabbedPane, BorderLayout.CENTER);
+        
         setTitle("Student Management System");
         pack();
         setSize(490, 460);
@@ -50,14 +59,16 @@ public class StudentApplication extends JFrame implements ActionListener, Change
         setVisible(true);
 
         try {
-            //university = new University("The University of Computing");
             university = University.getInstance();
         }
         catch(NoClassDefFoundError error){
             setStatus("University.class not found.");
         }
+            
         new Thread(this).start();
     }
+
+
 
     /**
      * Method actionPerformed
@@ -70,14 +81,20 @@ public class StudentApplication extends JFrame implements ActionListener, Change
     public void actionPerformed(ActionEvent event) {
         String command = event.getActionCommand();
         setStatus(command + " menu selected.");
-        if (command.equals("Exit"))
+        
+        if (command.equals("Exit")) 
             System.exit(0);
-        else if (command.equals("Reset"))
+        else 
+        if (command.equals("Reset")) 
             reset();
-        else if(command.equals("Usage"))
-            popup("Student Management System", "Manage information on students and courses.\nEnter data in relevant fields to perform functions.\nData in irrelevant fields will be ignored.\nSee User's Guide for more details.");
-        else if(command.equals("About")) popup("About Student Management System", "Object-Oriented Programming in Java\nAuthor: Permanand Mohan (c) 2013");
+        else 
+        if(command.equals("Usage")) 
+            popup("Student Management System", "Manage information on students and courses.\nEnter data in relevant fields to perform functions.\nData in irrelevant fields will be ignored.\nSee Users' Guide for more details.");
+        else 
+        if(command.equals("About")) popup("About Student Management System", "Object-Oriented Programming in Java\nAuthor: Permanand Mohan (c) 2013");
     }
+
+
 
     /**
      * Method createJMenuItem
@@ -92,6 +109,8 @@ public class StudentApplication extends JFrame implements ActionListener, Change
         item.addActionListener(this);
         return item;
     }
+    
+
 
     /**
      * Method popup
@@ -103,8 +122,11 @@ public class StudentApplication extends JFrame implements ActionListener, Change
      */
 
     private void popup (String title, String message) {
-        JOptionPane.showMessageDialog(null, message, title, JOptionPane.INFORMATION_MESSAGE);
+        JOptionPane.showMessageDialog
+            (null, message, title, JOptionPane.INFORMATION_MESSAGE);
     }
+    
+
 
     /**
      * Method reset
@@ -112,13 +134,14 @@ public class StudentApplication extends JFrame implements ActionListener, Change
      */
 
     public void reset() {
-        //university = new University("The University of Computing");
         university = University.getInstance();
         tabbedPane.removeAll();
         tabbedPane.addTab("Students", new StudentPanel(this, university));
         tabbedPane.addTab("Courses", new CoursePanel(this, university));
         tabbedPane.addTab("View All", new ViewAllPanel(this, university));
     }
+    
+
 
     /**
      * Method run
@@ -130,6 +153,8 @@ public class StudentApplication extends JFrame implements ActionListener, Change
         tabbedPane.addTab("Courses", new CoursePanel(this, university));
         tabbedPane.addTab("View All", new ViewAllPanel(this, university));
     }
+    
+
 
     /**
      * Method setStatus
@@ -142,6 +167,8 @@ public class StudentApplication extends JFrame implements ActionListener, Change
     protected void setStatus(String message) {
         statusBar.setText(message);
     }
+    
+
 
     /**
      * Method stateChanged
@@ -150,10 +177,12 @@ public class StudentApplication extends JFrame implements ActionListener, Change
      * @param event
      *
      */
-
+    
     public void stateChanged(ChangeEvent event) {
         setStatus("Ready.");
     }
+
+
 
     public static void main(String[] args) {
         StudentApplication sa = new StudentApplication();

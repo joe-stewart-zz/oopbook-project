@@ -1,14 +1,20 @@
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
+
 import java.util.*;
+
+
 
 /**
  * CoursePanel
  *
  */
 
-public class CoursePanel extends JPanel implements ActionListener {
+public class CoursePanel 
+        extends JPanel 
+        implements ActionListener {
+    
     private StudentApplication studentApplication;
     private University university;
     private JTextField courseCodeField;
@@ -17,6 +23,8 @@ public class CoursePanel extends JPanel implements ActionListener {
     private JTextField courseMaxStudentsField;
     private JTextField studentIDField;
     private JTextArea studentsField;
+    
+
 
     /**
      * Method CoursePanel
@@ -52,7 +60,8 @@ public class CoursePanel extends JPanel implements ActionListener {
         constrain(new JLabel("Credits:"), 0, 2, 2, GridBagConstraints.HORIZONTAL);
         constrain(courseCreditsField, 2, 2, 5, GridBagConstraints.HORIZONTAL);
         constrain(new JLabel("Enrollment Limit:"), 0, 3, 2, GridBagConstraints.HORIZONTAL);
-        constrain(courseMaxStudentsField, 2, 3, 5, GridBagConstraints.HORIZONTAL);
+        constrain(courseMaxStudentsField, 2, 3, 5, GridBagConstraints.HORIZONTAL);      
+        
         constrain(new JLabel("Student ID:"), 0, 4, 2, GridBagConstraints.HORIZONTAL);
         constrain(studentIDField, 2, 4, 5, GridBagConstraints.HORIZONTAL);
 
@@ -66,13 +75,13 @@ public class CoursePanel extends JPanel implements ActionListener {
         constrain(createJButton("Register"), 4, 20, 1, GridBagConstraints.BOTH);
         constrain(createJButton("De-register"), 5, 20, 1, GridBagConstraints.BOTH);
 
-        // create four Course objects
-
         university.addCourse("COMP1100", "Computer Programming I", 6, 20);
         university.addCourse("COMP3100", "Operating Systems", 4, 2);
         university.addCourse("COMP2500", "Object-Oriented Programming", 4, 3);
         university.addCourse("COMP1200", "Computer Programming II", 6, 4);
     }
+
+
 
     /**
      * Method constrain
@@ -98,6 +107,9 @@ public class CoursePanel extends JPanel implements ActionListener {
         add(component, gbConstraints);
     }
 
+
+
+
     /**
      * Method createJButton
      *
@@ -112,6 +124,9 @@ public class CoursePanel extends JPanel implements ActionListener {
         return button;
     }
 
+
+
+
     /**
      * Method actionPerformed
      *
@@ -124,17 +139,22 @@ public class CoursePanel extends JPanel implements ActionListener {
         try {
             String command = event.getActionCommand();
             studentApplication.setStatus(command + " operation selected.");
-            if (command.equals("Clear"))
+            if (command.equals("Clear")) 
                 clear();
-            else if(command.equals("Query"))
+            else 
+            if(command.equals("Query")) 
                 query();
-            else if (command.equals("New"))
+            else 
+            if (command.equals("New")) 
                 addCourse();
-            else if (command.equals("Update"))
+            else 
+            if (command.equals("Update")) 
                 updateCourse();
-            else if (command.equals("Register"))
+            else 
+            if (command.equals("Register")) 
                 register();
-            else if(command.equals("De-register"))
+            else 
+            if(command.equals("De-register")) 
                 deregister();
         }
         catch (Error error) {
@@ -144,6 +164,9 @@ public class CoursePanel extends JPanel implements ActionListener {
             studentApplication.setStatus("Exception occurred: " + exception.getMessage());
         }
     }
+
+
+
 
     /**
      * Method clear
@@ -159,24 +182,27 @@ public class CoursePanel extends JPanel implements ActionListener {
         studentsField.setText("");
     }
 
+
+
+
     /**
      * Method query
      *
      */
 
-    private void query() {
+        private void query() {
         try {
             String courseCode = courseCodeField.getText();
             if (courseCode.length() > 0) {
                 Course course = university.getCourse(courseCode);
-                if (course == null)
+                if (course == null) 
                     studentApplication.setStatus("No course with this code exists.");
                 else {
                     studentApplication.setStatus("Course found.");
                     setCourse(course);
                 }
             }
-            else
+            else 
                 studentApplication.setStatus("To query, enter a Course Code.");
         }
         catch (NoSuchMethodError error) {
@@ -185,40 +211,48 @@ public class CoursePanel extends JPanel implements ActionListener {
         catch (NoClassDefFoundError error) {
             studentApplication.setStatus("University.class not found.");
         }
-    }
+        }
+
+
 
     /**
      * Method setCourse
+     *
+     *
+     * @param course
      *
      */
 
     private void setCourse(Course course) {
         try {
-            clear();
-            courseCodeField.setText(course.getCode());
-            courseTitleField.setText(course.getTitle());
-            courseCreditsField.setText(course.getNumCredits() + "");
+                clear();
+                courseCodeField.setText(course.getCode());
+                courseTitleField.setText(course.getTitle());
+                courseCreditsField.setText(course.getNumCredits() + "");
             courseMaxStudentsField.setText(course.getMaxStudents() + "");
-            studentsField.setText("");
+                studentsField.setText("");
 
-            ArrayList studentsList = university.getStudents(course.getCode());
+            Collection<Student> studentsList = university.getStudents(course.getCode());
 
             String output = "The following " + studentsList.size() + " students are registered:\n\n";
 
-            for(int i=0; i<studentsList.size(); i++) {
-                Student s = (Student) studentsList.get(i);
+            Iterator<Student> i = studentsList.iterator();
+            while (i.hasNext()) {
+                Student s = i.next();
                 output = output + s.getID() + ", " + s.getName() + "\n";
             }
-
-            studentsField.setText(output);
-        }
-        catch (NoSuchMethodError error) {
+                
+                studentsField.setText(output);
+            }
+            catch (NoSuchMethodError error) {
             studentApplication.setStatus("Course methods not implemented.");
         }
-        catch (NoClassDefFoundError error) {
+            catch (NoClassDefFoundError error) {
             studentApplication.setStatus("Course.class not found.");
         }
     }
+    
+
 
     /**
      * Method addCourse
@@ -233,39 +267,41 @@ public class CoursePanel extends JPanel implements ActionListener {
             String courseCode = courseCodeField.getText();
 
             if (courseCode.length() > 0) {
-                course = university.getCourse(courseCode);
-                if (course != null)
+                    course = university.getCourse(courseCode);
+                    if (course != null) 
                     studentApplication.setStatus("Course already exists.");
-                else {
+                    else {
                     String title = courseTitleField.getText();
                     int numCredits = Integer.parseInt(courseCreditsField.getText());
-                    int maxStudents = Integer.parseInt(courseMaxStudentsField.getText());
+                    int maxStudents = Integer.parseInt(courseMaxStudentsField.getText());                       
                     course = university.addCourse(courseCode, title, numCredits, maxStudents);
                     if (course != null) {
                         setCourse(course);
-                        studentApplication.setStatus("Course successfully added.");
+                            studentApplication.setStatus("Course successfully added.");
                     }
                     else
-                        studentApplication.setStatus("Course not added.");
+                            studentApplication.setStatus("Course not added.");
+                    }
                 }
-            }
-            else
+                else 
                 studentApplication.setStatus("Enter a valid course code.");
-        }
+            }
         catch (NoSuchMethodError error){
             studentApplication.setStatus("addCourse() not implemented.");
         }
         catch (NoClassDefFoundError error){
             studentApplication.setStatus("University.class not found.");
         }
-    }
+        }
+    
+
 
     /**
-     * Method update
+     * Method updateCourse
      *
      */
 
-    private void updateCourse() {
+        private void updateCourse() {
 
         Course course;
 
@@ -273,34 +309,38 @@ public class CoursePanel extends JPanel implements ActionListener {
             String courseCode = courseCodeField.getText();
 
             if (courseCode.length() > 0) {
-                course = university.getCourse(courseCode);
-                if (course == null)
+                    course = university.getCourse(courseCode);
+                    if (course == null) 
                     studentApplication.setStatus("No course with this code exists.");
-                else {
+                    else {
                     String title = courseTitleField.getText();
                     int numCredits = Integer.parseInt(courseCreditsField.getText());
-                    int maxStudents = Integer.parseInt(courseMaxStudentsField.getText());
-
+                    int maxStudents = Integer.parseInt(courseMaxStudentsField.getText());                       
                     course = university.updateCourse(courseCode, title, numCredits, maxStudents);
 
                     if (course != null) {
                         setCourse(course);
-                        studentApplication.setStatus("Course successfully updated.");
+                            studentApplication.setStatus("Course successfully updated.");
                     }
                     else
-                        studentApplication.setStatus("Course not updated.");
+                            studentApplication.setStatus("Course not updated.");
+
+                    }
                 }
-            }
-            else
+                else 
                 studentApplication.setStatus("Enter a valid course code.");
-        }
+            }
         catch (NoSuchMethodError error){
             studentApplication.setStatus("updateCourse() not implemented.");
         }
         catch (NoClassDefFoundError error){
             studentApplication.setStatus("University.class not found.");
         }
+
     }
+    
+
+
 
     /**
      * Method register
@@ -309,25 +349,25 @@ public class CoursePanel extends JPanel implements ActionListener {
 
     private void register() {
         try {
-            String id = studentIDField.getText();
-            String courseCode = courseCodeField.getText();
-
+                String id = studentIDField.getText();
+                String courseCode = courseCodeField.getText();
+            
             if (id.length() == 0 || courseCode.length() == 0)
                 studentApplication.setStatus("Please enter a valid student ID and course code.");
-            else {
+                else {
                 boolean success;
 
-                success = university.registerStudent(Long.parseLong(id), courseCode);
+                    success = university.registerStudent(Long.parseLong(id), courseCode);
                 if (success)
-                    studentApplication.setStatus("Student registered for course.");
+                        studentApplication.setStatus("Student registered for course.");
                 else
                     studentApplication.setStatus("Registration failed.");
+                }
             }
-        }
         catch (NoSuchMethodError error){
             studentApplication.setStatus("University methods not implemented.");
         }
-        catch (NoClassDefFoundError error) {
+            catch (NoClassDefFoundError error) {
             studentApplication.setStatus("University.class not found.");
         }
         catch (TooManyCreditsException tmce) {
@@ -336,7 +376,11 @@ public class CoursePanel extends JPanel implements ActionListener {
         catch (CourseFullException cfe) {
             studentApplication.setStatus(cfe.getMessage());
         }
+
     }
+        
+
+
 
     /**
      * Method deregister
@@ -347,7 +391,7 @@ public class CoursePanel extends JPanel implements ActionListener {
         try {
             String id = studentIDField.getText();
             String courseCode = courseCodeField.getText();
-            if (id.length() == 0 || courseCode.length() == 0)
+            if (id.length() == 0 || courseCode.length() == 0) 
                 studentApplication.setStatus("Please enter a valid student ID and course code.");
             else {
                 boolean success;
@@ -355,9 +399,9 @@ public class CoursePanel extends JPanel implements ActionListener {
                 if (success) {
                     studentApplication.setStatus("Student de-registered from course.");
                 }
-                else
+                else 
                     studentApplication.setStatus("De-registration failed.");
-            }
+                }
         }
         catch (NoSuchMethodError error){
             studentApplication.setStatus("deregister()/getCourse() methods not implemented.");
@@ -366,4 +410,5 @@ public class CoursePanel extends JPanel implements ActionListener {
             studentApplication.setStatus("University.class not found. ");
         }
     }
+
 }

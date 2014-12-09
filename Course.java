@@ -1,4 +1,4 @@
-public class Course {
+public class Course implements Comparable<Course> {
     private String code;
     private String title;
     private int noCredits;
@@ -21,6 +21,10 @@ public class Course {
         }
         else
             throw new IllegalArgumentException("Argument is not of type Course.");
+    }
+
+    public int hashCode() {
+        return code.hashCode();
     }
 
     public String getCode() {
@@ -49,6 +53,10 @@ public class Course {
 
     public void setMaxStudents(int maxStudents) {
         this.maxStudents = maxStudents;
+    }
+
+    public int compareTo(Course course) {
+        return this.code.compareTo(course.code);
     }
 
     public String toString() {
