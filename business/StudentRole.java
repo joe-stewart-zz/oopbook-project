@@ -1,6 +1,8 @@
 package business;
 
-public abstract class StudentRole {
+import java.io.Serializable;
+
+public abstract class StudentRole implements Serializable {
     private String name;
     private Student student;
 

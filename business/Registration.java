@@ -1,6 +1,8 @@
 package business;
 
-public class Registration {
+import java.io.Serializable;
+
+public class Registration implements Serializable {
     private Student student;
     private Course course;
 

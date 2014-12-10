@@ -1,6 +1,12 @@
 package business;
 
 import java.util.*;
+import java.io.Serializable;
+import java.io.IOException;
+import java.io.FileOutputStream;
+import java.io.ObjectOutputStream;
+import java.io.FileInputStream;
+import java.io.ObjectInputStream;
 
 public class University {
     private static final int MAX_CREDITS = 20;
@@ -308,6 +314,42 @@ public class University {
         }
         output = "There are " + sorted.size() + " courses: " + "\n\n" + output;
         return output;
+    }
+
+    public void read() throws IOException, ClassNotFoundException {
+        FileInputStream fis = null;
+        ObjectInputStream ois = null;
+        try {
+            fis = new FileInputStream("university.ser");
+            ois = new ObjectInputStream(fis);
+            students = (HashMap<Long, Student>) ois.readObject();
+            courses = (HashMap<String, Course>) ois.readObject();
+            registrations1 = (HashMap<Student, ArrayList<Registration>>) ois.readObject();
+            registrations2 = (HashMap<Course, ArrayList<Registration>>) ois.readObject();
+        } finally {
+            if(ois != null)
+                ois.close();
+            if(fis != null)
+                fis.close();
+        }
+    }
+
+    public void save() throws IOException {
+        FileOutputStream fos = null;
+        ObjectOutputStream oos = null;
+        try {
+            fos = new FileOutputStream("university.ser");
+            oos = new ObjectOutputStream(fos);
+            oos.writeObject(students);
+            oos.writeObject(courses);
+            oos.writeObject(registrations1);
+            oos.writeObject(registrations2);
+        } finally {
+            if(oos != null)
+                oos.close();
+            if(fos != null)
+                fos.close();
+        }
     }
 
     public static void main(String[] args) {

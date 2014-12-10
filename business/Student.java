@@ -1,8 +1,9 @@
 package business;
 
 import java.util.*;
+import java.io.Serializable;
 
-public class Student {
+public class Student implements Serializable {
     private long ID;
     private String name;
     private String address;

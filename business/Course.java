@@ -1,6 +1,8 @@
 package business;
 
-public class Course implements Comparable<Course> {
+import java.io.Serializable;
+
+public class Course implements Comparable<Course>, Serializable {
     private String code;
     private String title;
     private int noCredits;
