@@ -1,4 +1,6 @@
-package business;
+package data;
+
+import business.*;
 
 public interface Persistence {
     public abstract void read() throws Exception;

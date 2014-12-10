@@ -1,6 +1,7 @@
 package user;
 
 import business.*;
+import data.*;
 
 import java.awt.*;
 import java.awt.event.*;

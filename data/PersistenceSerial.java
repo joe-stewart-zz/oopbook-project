@@ -1,4 +1,6 @@
-package business;
+package data;
+
+import business.*;
 
 import java.io.*;
 
