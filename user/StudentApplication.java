@@ -8,7 +8,7 @@ import javax.swing.*;
 import javax.swing.border.*;
 import javax.swing.event.*;
 
-
+import java.io.*;
 
 /**
  * StudentApplication
@@ -37,6 +37,7 @@ public class StudentApplication
 
         JMenu menu = new JMenu("File");
         menu.add(createJMenuItem("Reset"));
+        menu.add(createJMenuItem("Save and Exit"));
         menu.add(createJMenuItem("Exit"));
         menuBar.add(menu);
 
@@ -68,6 +69,13 @@ public class StudentApplication
         catch(NoClassDefFoundError error){
             setStatus("University.class not found.");
         }
+
+        try {
+            Persistence p = new PersistenceText(university);
+            p.read();
+        } catch(Exception e) {
+            setStatus("Error in reading: " + e);
+        }
             
         new Thread(this).start();
     }
@@ -86,6 +94,15 @@ public class StudentApplication
         String command = event.getActionCommand();
         setStatus(command + " menu selected.");
         
+        if(command.equals("Save and Exit")) {
+            try {
+                Persistence p = new PersistenceText(university);
+                p.save();
+                System.exit(0);
+            } catch(Exception e) {
+                setStatus("Error in saving: " + e);
+            }
+        }
         if (command.equals("Exit")) 
             System.exit(0);
         else 
