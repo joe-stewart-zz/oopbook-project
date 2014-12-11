@@ -1,5 +1,11 @@
 #OOPBOOK-PROJECT
 
+Version 1.2
+
+    Corresponds to the fifth and final programming project, with serialization
+    and RDB persistence implemented. A skeleton only has been included for text
+    persistence.
+
 Version 1.1
 
     Placed classes into packages to match fourth programming project, final

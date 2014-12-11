@@ -73,7 +73,8 @@ public class StudentApplication
 
         try {
             //Persistence p = new PersistenceText(university);
-            Persistence p = new PersistenceSerial(university);
+            //Persistence p = new PersistenceSerial(university);
+            Persistence p = new PersistenceRDB(university);
             p.read();
         } catch(Exception e) {
             setStatus("Error in reading: " + e);
@@ -99,7 +100,8 @@ public class StudentApplication
         if(command.equals("Save and Exit")) {
             try {
                 //Persistence p = new PersistenceText(university);
-                Persistence p = new PersistenceSerial(university);
+                //Persistence p = new PersistenceSerial(university);
+                Persistence p = new PersistenceRDB(university);
                 p.save();
                 System.exit(0);
             } catch(Exception e) {

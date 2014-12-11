@@ -303,7 +303,7 @@ public class University {
         return output;
     }
 
-    public String getCourses() {
+    public String getCoursesList() {
         Collection<Course> c = courses.values();
         TreeSet<Course> sorted = new TreeSet<Course>(c);
         String output = "";
@@ -314,6 +314,47 @@ public class University {
         }
         output = "There are " + sorted.size() + " courses: " + "\n\n" + output;
         return output;
+    }
+
+    public Collection<Course> getCourses() {
+        Collection<Course> c = courses.values();
+        return c;
+    }
+
+    public Collection<Student> getStudents() {
+        Collection<Student> s = students.values();
+        return s;
+    }
+
+    public Collection<UndergraduateStudent> getUndergraduateStudents() {
+        Collection<Student> allStudents = students.values();
+        ArrayList<UndergraduateStudent> ugStudents = new ArrayList<UndergraduateStudent>();
+        Iterator<Student> i = allStudents.iterator();
+        while(i.hasNext()) {
+            Student student = i.next();
+            UndergraduateStudent ugStudent = (UndergraduateStudent) student.getRole("UndergraduateStudent");
+            if(ugStudent != null)
+                ugStudents.add(ugStudent);
+        }
+        return ugStudents;
+    }
+
+    public Collection<PostgraduateStudent> getPostgraduateStudents() {
+        Collection<Student> allStudents = students.values();
+        ArrayList<PostgraduateStudent> pgStudents = new ArrayList<PostgraduateStudent>();
+        Iterator<Student> i = allStudents.iterator();
+        while(i.hasNext()) {
+            Student student = i.next();
+            PostgraduateStudent pgStudent = (PostgraduateStudent) student.getRole("PostgraduateStudent");
+            if(pgStudent != null)
+                pgStudents.add(pgStudent);
+        }
+        return pgStudents;
+    }
+
+    public Collection<ArrayList<Registration>> getRegistrations1() {
+        Collection<ArrayList<Registration>> r = registrations1.values();
+        return r;
     }
 
     public void read() throws IOException, ClassNotFoundException {

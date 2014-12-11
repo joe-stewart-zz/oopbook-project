@@ -212,7 +212,7 @@ public class ViewAllPanel
         private void courses() {
         try {
 
-            viewField.setText(university.getCourses());
+            viewField.setText(university.getCoursesList());
             viewLabel.setText("List of All Courses");
 
         }
